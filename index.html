@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atomic Habits - STAR-Shaigan Learning Portal</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body class="theme-glass">
+    <!-- Theme Selector -->
+    <div class="theme-selector">
+        <button onclick="changeTheme('theme-glass')" class="theme-btn glass-theme" title="Glass Theme"></button>
+        <button onclick="changeTheme('theme-dark')" class="theme-btn dark-theme" title="Dark Theme"></button>
+        <button onclick="changeTheme('theme-royal')" class="theme-btn royal-theme" title="Royal Theme"></button>
+        <button onclick="changeTheme('theme-gradient')" class="theme-btn gradient-theme" title="Gradient Theme"></button>
+    </div>
+
+    <!-- Fireworks Container -->
+    <div id="fireworks-container"></div>
+    
+    <!-- Balloons Container -->
+    <div id="balloons-container"></div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo-section">
+                <img src="assets/star_department_logo.png" alt="STAR Department" class="logo animated-logo">
+                <img src="assets/shaigan_pharma_logo.png" alt="Shaigan Pharma" class="logo animated-logo">
+            </div>
+            <h1 class="main-title">STAR-Shaigan Learning Portal</h1>
+            <div class="user-welcome" id="userWelcome" style="display: none;">
+                <span id="welcomeText"></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- User Registration Form -->
+        <section id="registrationSection" class="section">
+            <div class="container">
+                <div class="form-container">
+                    <h2 class="section-title">Welcome to Atomic Habits Journey</h2>
+                    <p class="section-subtitle">Transform your life one habit at a time</p>
+                    
+                    <form id="userForm" class="user-form">
+                        <div class="form-group">
+                            <label for="fullName">Full Name</label>
+                            <input type="text" id="fullName" name="fullName" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="designation">Designation</label>
+                            <input type="text" id="designation" name="designation" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="team">Team</label>
+                            <input type="text" id="team" name="team" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="city">City</label>
+                            <input type="text" id="city" name="city" required>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-rocket"></i>
+                            Start Your Journey
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Habit Selection -->
+        <section id="habitSelectionSection" class="section" style="display: none;">
+            <div class="container">
+                <h2 class="section-title">Choose Your Path</h2>
+                <div class="habit-choice-container">
+                    <div class="habit-choice-card" onclick="selectHabitType('good')">
+                        <div class="choice-icon">
+                            <i class="fas fa-plus-circle"></i>
+                        </div>
+                        <h3>I want to adopt good habits</h3>
+                        <p>Build positive habits that will transform your life</p>
+                    </div>
+                    
+                    <div class="habit-choice-card" onclick="selectHabitType('bad')">
+                        <div class="choice-icon">
+                            <i class="fas fa-minus-circle"></i>
+                        </div>
+                        <h3>I want to get rid of bad habits</h3>
+                        <p>Break free from habits that hold you back</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Habit List -->
+        <section id="habitListSection" class="section" style="display: none;">
+            <div class="container">
+                <h2 class="section-title" id="habitListTitle">Select a Habit</h2>
+                
+                <!-- Featured Habits Table -->
+                <div class="featured-habits">
+                    <h3>Featured Habits</h3>
+                    <div class="habits-grid" id="featuredHabitsGrid">
+                        <!-- Featured habits will be populated here -->
+                    </div>
+                </div>
+                
+                <!-- All Habits Dropdown -->
+                <div class="all-habits-section">
+                    <h3>All Habits</h3>
+                    <select id="allHabitsDropdown" class="habits-dropdown">
+                        <option value="">Select from all habits...</option>
+                    </select>
+                </div>
+            </div>
+        </section>
+
+        <!-- Four Stages -->
+        <section id="stagesSection" class="section" style="display: none;">
+            <div class="container">
+                <h2 class="section-title">The Four Laws of Behavior Change</h2>
+                <div class="selected-habit-info">
+                    <h3 id="selectedHabitTitle"></h3>
+                    <p id="selectedHabitDescription"></p>
+                </div>
+                
+                <div class="stages-container">
+                    <div class="stage-card" id="stage1" onclick="openStage(1)">
+                        <div class="stage-number">1</div>
+                        <h3>Make it Obvious</h3>
+                        <p>The 1st Law of Behavior Change</p>
+                        <div class="stage-status" id="stage1Status">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="stage-card" id="stage2" onclick="openStage(2)">
+                        <div class="stage-number">2</div>
+                        <h3>Make it Attractive</h3>
+                        <p>The 2nd Law of Behavior Change</p>
+                        <div class="stage-status" id="stage2Status">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="stage-card" id="stage3" onclick="openStage(3)">
+                        <div class="stage-number">3</div>
+                        <h3>Make it Easy</h3>
+                        <p>The 3rd Law of Behavior Change</p>
+                        <div class="stage-status" id="stage3Status">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="stage-card" id="stage4" onclick="openStage(4)">
+                        <div class="stage-number">4</div>
+                        <h3>Make it Satisfying</h3>
+                        <p>The 4th Law of Behavior Change</p>
+                        <div class="stage-status" id="stage4Status">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stage Detail -->
+        <section id="stageDetailSection" class="section" style="display: none;">
+            <div class="container">
+                <div class="stage-detail-container">
+                    <h2 id="stageDetailTitle"></h2>
+                    <div class="stage-content" id="stageDetailContent">
+                        <!-- Stage content will be populated here -->
+                    </div>
+                    <button id="completeStageBtn" class="btn btn-primary" onclick="completeStage()">
+                        Complete Stage
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quiz Section -->
+        <section id="quizSection" class="section" style="display: none;">
+            <div class="container">
+                <div class="quiz-container">
+                    <div class="quiz-header">
+                        <h2>Knowledge Check</h2>
+                        <div class="quiz-progress">
+                            <span id="questionNumber">1</span> of <span id="totalQuestions">10</span>
+                        </div>
+                    </div>
+                    
+                    <div class="quiz-content">
+                        <h3 id="questionText"></h3>
+                        <div class="quiz-options" id="quizOptions">
+                            <!-- Quiz options will be populated here -->
+                        </div>
+                    </div>
+                    
+                    <div class="quiz-footer">
+                        <div class="quiz-score">
+                            Score: <span id="currentScore">0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Final Score -->
+        <section id="finalScoreSection" class="section" style="display: none;">
+            <div class="container">
+                <div class="certificate-container">
+                    <div class="certificate" id="certificate">
+                        <div class="certificate-header">
+                            <div class="certificate-logos">
+                                <img src="assets/star_department_logo.png" alt="STAR Department" class="cert-logo">
+                                <img src="assets/shaigan_pharma_logo.png" alt="Shaigan Pharma" class="cert-logo">
+                            </div>
+                            <h1>Certificate of Completion</h1>
+                        </div>
+                        
+                        <div class="certificate-body">
+                            <p class="certificate-text">This is to certify that</p>
+                            <h2 class="certificate-name" id="certificateName"></h2>
+                            <p class="certificate-text">has successfully completed the</p>
+                            <h3 class="certificate-course" id="certificateCourse"></h3>
+                            <p class="certificate-text">with a score of</p>
+                            <div class="certificate-score" id="certificateScore"></div>
+                        </div>
+                        
+                        <div class="certificate-footer">
+                            <div class="certificate-signature">
+                                <p>Zubair Ahmad</p>
+                                <p>Senior SFE Manager</p>
+                                <p>STAR-Shaigan Learning Portal</p>
+                            </div>
+                            <div class="certificate-date" id="certificateDate"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="certificate-actions">
+                        <button class="btn btn-primary" onclick="downloadCertificate()">
+                            <i class="fas fa-download"></i>
+                            Download Certificate
+                        </button>
+                        <button class="btn btn-secondary" onclick="startNewJourney()">
+                            <i class="fas fa-refresh"></i>
+                            Start New Journey
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay" style="display: none;">
+        <div class="loading-spinner"></div>
+        <p>Loading...</p>
+    </div>
+
+    <script src="supabase-client.js"></script>
+    <script src="habits-data.js"></script>
+    <script src="quiz-data.js"></script>
+    <script src="animations.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
